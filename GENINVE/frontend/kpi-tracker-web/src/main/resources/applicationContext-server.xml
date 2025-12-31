@@ -36,6 +36,9 @@
 
 	<context:component-scan
 		base-package="org.pahappa.systems.kpiTracker.core.services.impl" />
+
+	<context:component-scan
+			base-package="org.pahappa.systems.kpiTracker.core" />
 	<context:component-scan
 		base-package="org.pahappa.systems.kpiTracker.core.dao.impl" />
 

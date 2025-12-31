@@ -45,6 +45,9 @@
 		<mapping class="org.pahappa.systems.kpiTracker.models.settings.ApplicationSettings"/>
 		<mapping class="org.pahappa.systems.kpiTracker.models.staff.Staff" />
 		<mapping class="org.pahappa.systems.kpiTracker.models.security.PasswordResetToken" />
+
+
+
 		<mapping class="org.pahappa.systems.kpiTracker.models.inventoryItem.InventoryItem"/>
 		<mapping class="org.pahappa.systems.kpiTracker.models.debtor.Debtor"/>
 
