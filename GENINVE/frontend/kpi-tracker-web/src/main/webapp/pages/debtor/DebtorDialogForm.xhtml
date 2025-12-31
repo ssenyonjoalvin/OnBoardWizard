@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/pages/californiatemplate/dialog-template.xhtml">
+
+    <ui:define name="head">
+        <style type="text/css">
+            .capitalized {
+                text-transform: capitalize;
+            }
+        </style>
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="DebtorFormDialog">
+            <p:growl id="growl" showDetail="true" life="4000" />
+
+            <div class="ui-fluid formgrid grid ">
+
+                <div class="field col-12 p-mx-4">
+                    <h5>Debtor Name</h5>
+                    <p:inputText id="debtorName" value="#{debtorsDialogForm.model.name}"
+                                 required="true"
+                                 requiredMessage="debtor name is required"
+                                 placeholder="Enter debtors name"
+                                 styleClass="p-inputtext-sm w-full"/>
+                    <p:message for="debtorName" style="color: red"/>
+                </div>
+
+
+                <div class="field col-12 p-mx-4">
+                    <h5>Phone Number</h5>
+                    <p:inputText id="phoneNumber"
+                                 value="#{debtorsDialogForm.model.phone}"
+                                 required="true"
+                                 placeholder="Enter phone number"
+                                 decimalPlaces="2"
+                                 styleClass="w-full">
+                    </p:inputText>
+                </div>
+
+
+                <div class="field col-12 p-mx-4">
+                    <h5>Select Commodity</h5>
+                    <p:selectOneMenu id="inventoryItem" value="#{debtorsDialogForm.model.inventoryItem}" converter="inventoryItemConverter" style="width:150px">
+                        <f:selectItem itemLabel="Select A Commodity" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{debtorsDialogForm.inventoryItem}" var="item" itemLabel="#{item.name}" itemValue="#{item}"/>
+                    </p:selectOneMenu>
+                </div>
+
+
+                <div class="field col-12 p-mx-4">
+                    <h5>Quantity</h5>
+                    <p:inputNumber id="Qty"
+                                   value="#{debtorsDialogForm.model.itemQty}"
+                                   required="true"
+                                   decimalPlaces="2"
+                                   styleClass="w-full">
+                        <f:validateDoubleRange minimum="0"/>
+                    </p:inputNumber>
+                </div>
+
+
+
+                <!-- Buttons -->
+                <div class="field col-12 p-d-flex p-jc-between p-mt-5">
+                    <p:commandButton value="Cancel"
+                                     process="@this"
+                                     action="#{debtorsDialogForm.hide}"
+
+                                     style="background-color: #fff !important;
+                                            border: 1px solid #f5c6cb !important;
+                                            color: #e74c3c !important;
+                                            border-radius: 8px !important;
+                                            margin: 0 2rem!important;
+
+                                            padding: 0.6rem 1.5rem !important;
+                                            box-shadow: 0 2px 4px rgba(231,76,60,0.1);
+                                            transition: all 0.3s ease;"
+                    />
+
+                    <p:commandButton value="Save"
+                                     rendered="#{debtorsDialogForm.model.id eq null}"
+                                     process="@form"
+                                     actionListener="#{debtorsDialogForm.save}"
+                                     update="@form growl"
+                                     validateClient="true"
+                                     style="background-color: #FF0000 !important;
+                                            border: none !important;
+                                            color: white !important;
+                                            border-radius: 8px !important;
+                                            margin: 0 2rem!important;
+
+                                            padding: 0.6rem 1.5rem !important;
+                                            box-shadow: 0 2px 4px rgba(26,135,81,0.2);
+                                            transition: all 0.3s ease;"
+                    >
+                    </p:commandButton>
+
+                    <p:commandButton value="Update"
+                                     rendered="#{debtorsDialogForm.model.id ne null}"
+                                     process="@form"
+                                     actionListener="#{debtorsDialogForm.save}"
+                                     update="@form growl"
+                                     validateClient="true"
+                                     style="background-color:  #FF0000 !important;
+                                            border: none !important;
+                                            color: white !important;
+                                            border-radius: 8px !important;
+                                            margin: 0 2rem!important;
+
+                                            padding: 0.6rem 1.5rem !important;
+                                            box-shadow: 0 2px 4px rgba(26,135,81,0.2);
+                                            transition: all 0.3s ease;"
+                    >
+
+                    </p:commandButton>
+                </div>
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

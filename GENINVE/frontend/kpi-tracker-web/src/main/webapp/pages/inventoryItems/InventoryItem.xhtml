@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/pages/californiatemplate/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="inventoryItemViewForm">
+            <p:growl id="messages" showDetail="true" life="4000"/>
+
+            <!-- Header: Title + Add Button -->
+            <div class="p-d-flex p-jc-between p-ai-center p-mb-4">
+                <h1 style="margin: 0; font-weight: 600; color: #343a40;" icon="">Inventory Items</h1>
+            </div>
+
+            <!-- Filters -->
+            <div class="p-d-flex p-ai-center p-mb-4">
+                <h:outputText value="Search:" styleClass="p-mr-2"/>
+                <p:inputText id="searchTerm" value="#{inventoryItemView.searchTerm}" placeholder="Search by title..." styleClass="p-mr-4">
+                    <p:ajax event="keyup" delay="500" listener="#{inventoryItemView.reloadFilterReset}"
+                            update=":inventoryItemViewForm:inventoryTable" process="@this"/>
+                </p:inputText>
+
+                <p:commandButton value="Add Commodity" icon="pi pi-plus"
+                                 styleClass="ui-button"
+                                 actionListener="#{inventoryFormDialog.show}">
+                    <f:setPropertyActionListener value="#{null}" target="#{inventoryFormDialog.model}" />
+
+                    <p:ajax event="dialogReturn" listener="#{inventoryItemView.reloadFilterReset}"
+                            update=":inventoryItemViewForm:inventoryTable" />
+                </p:commandButton>
+
+            </div>
+
+            <div class="p-grid p-nogutter p-mt-2" style="background: white">
+                <!-- Goals Table -->
+                <p:dataTable id="inventoryTable" value="#{inventoryItemView.dataModels}" var="inventory"
+                             paginator="true"
+                             rows="5"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15,20"
+                             styleClass="p-datatable-striped p-datatable-sm"
+                             responsiveLayout="scroll">
+
+                    <p:column headerText="  Item Name ">
+                        <h:outputText value="#{inventory.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Cost Price">
+                        <h:outputText value="#{inventory.costPrice}"/>
+                    </p:column>
+
+                    <p:column headerText="Selling Price">
+                        <h:outputText value="#{inventory.sellingPrice}"/>
+                    </p:column>
+                    <p:column headerText="Opening Qty">
+                        <h:outputText value="#{inventory.openingStock}"/>
+                    </p:column>
+
+                    <p:column headerText="Qty Sold">
+                        <h:outputText value="#{inventory.orderedQty}"/>
+                    </p:column>
+                    <p:column headerText="Profit">
+                        <h:outputText value="#{inventory.profit}"/>
+                    </p:column>
+
+
+                    <p:column headerText="Created By">
+                        <h:outputText value="#{inventory.createdBy}">
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Actions" style="width:120px; text-align:center;">
+                        <!-- Edit Button -->
+                        <p:commandButton icon="fa fa-pencil"
+                                         styleClass="ui-button ui-button-flat"
+                                         actionListener="#{inventoryFormDialog.show}">
+                            <f:setPropertyActionListener value="#{inventory}" target="#{inventoryFormDialog.model}" />
+                            <p:ajax event="dialogReturn"
+                                    listener="#{inventoryItemView.reloadFilterReset}"
+                                    update=":inventoryItemViewForm:inventoryTable"/>
+                        </p:commandButton>
+
+                        <!-- Delete -->
+                        <p:commandButton icon="fa fa-trash" title="Delete"
+                                         styleClass="ui-button-danger ui-button-flat"
+                                         style="margin-left:5px"
+                                         actionListener="#{inventoryItemView.deleteSelectedItem(inventory)}"
+                                         update="inventoryItemViewForm">
+                            <p:confirm header="Confirmation"
+                                       message="You are about to delete inventory item '#{inventory.name}'. Are you sure?"
+                                       icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="450">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times"/>
+            </p:confirmDialog>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/pages/californiatemplate/dialog-template.xhtml">
+
+    <ui:define name="head">
+        <style type="text/css">
+            .capitalized {
+                text-transform: capitalize;
+            }
+        </style>
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="inventoryFormDialog">
+            <p:growl id="growl" showDetail="true" life="4000" />
+
+            <div class="ui-fluid formgrid grid ">
+
+                <div class="field col-12 p-mx-4">
+                    <h5>Item name</h5>
+                    <p:inputText id="itemName" value="#{inventoryFormDialog.model.name}"
+                                 required="true"
+                                 requiredMessage="item name is required"
+                                 placeholder="Enter Item name"
+                                 styleClass="p-inputtext-sm w-full"/>
+                    <p:message for="itemName" style="color: red"/>
+                </div>
+
+                <!-- Cost Price -->
+                <div class="field col-12 p-mx-4">
+                    <h5>Cost Price</h5>
+                    <p:inputNumber id="costPrice"
+                                   value="#{inventoryFormDialog.model.costPrice}"
+                                   required="true"
+                                   placeholder="1000.0"
+                                   decimalPlaces="2"
+                                   styleClass="w-full">
+                        <f:validateDoubleRange minimum="0"/>
+                    </p:inputNumber>
+                </div>
+
+                <!-- Selling Price -->
+                <div class="field col-12 p-mx-4">
+                    <h5>Selling Price</h5>
+                    <p:inputNumber id="SellingPrice"
+                                   value="#{inventoryFormDialog.model.sellingPrice}"
+                                   required="true"
+                                   placeholder="2000.0"
+                                   decimalPlaces="2"
+                                   styleClass="w-full">
+                        <f:validateDoubleRange minimum="0"/>
+                    </p:inputNumber>
+                </div>
+
+                <!-- Opening Qty -->
+                <div class="field col-12 p-mx-4">
+                    <h5>Opening Quantity</h5>
+                    <p:inputNumber id="openingQty"
+                                   value="#{inventoryFormDialog.model.openingStock}"
+                                   required="true"
+                                   placeholder="100"
+                                   decimalPlaces="2"
+                                   styleClass="w-full">
+                        <f:validateDoubleRange minimum="0"/>
+                    </p:inputNumber>
+                </div>
+
+
+                                <!-- Buttons -->
+                <div class="field col-12 p-d-flex p-jc-between p-mt-5">
+                    <p:commandButton value="Cancel"
+                                     process="@this"
+                                     action="#{inventoryFormDialog.hide}"
+
+                                     style="background-color: #fff !important;
+                                            border: 1px solid #f5c6cb !important;
+                                            color: #e74c3c !important;
+                                            border-radius: 8px !important;
+                                            margin: 0 2rem!important;
+
+                                            padding: 0.6rem 1.5rem !important;
+                                            box-shadow: 0 2px 4px rgba(231,76,60,0.1);
+                                            transition: all 0.3s ease;"
+                    />
+
+                    <p:commandButton value="Save"
+                                     rendered="#{inventoryFormDialog.model.id eq null}"
+                                     process="@form"
+                                     actionListener="#{inventoryFormDialog.save}"
+                                     update="@form growl"
+                                     validateClient="true"
+                                     style="background-color: #1a8751 !important;
+                                            border: none !important;
+                                            color: white !important;
+                                            border-radius: 8px !important;
+                                            margin: 0 2rem!important;
+
+                                            padding: 0.6rem 1.5rem !important;
+                                            box-shadow: 0 2px 4px rgba(26,135,81,0.2);
+                                            transition: all 0.3s ease;"
+                                     >
+                    </p:commandButton>
+
+                    <p:commandButton value="Update"
+                                     rendered="#{inventoryFormDialog.model.id ne null}"
+                                     process="@form"
+                                     actionListener="#{inventoryFormDialog.save}"
+                                     update="@form growl"
+                                     validateClient="true"
+                                     style="background-color: #1a8751 !important;
+                                            border: none !important;
+                                            color: white !important;
+                                            border-radius: 8px !important;
+                                            margin: 0 2rem!important;
+
+                                            padding: 0.6rem 1.5rem !important;
+                                            box-shadow: 0 2px 4px rgba(26,135,81,0.2);
+                                            transition: all 0.3s ease;"
+                                     >
+
+                    </p:commandButton>
+                </div>
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

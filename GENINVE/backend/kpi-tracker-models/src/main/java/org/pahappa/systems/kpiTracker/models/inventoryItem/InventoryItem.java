@@ -1,5 +1,6 @@
 package org.pahappa.systems.kpiTracker.models.inventoryItem;
 
+import org.pahappa.systems.kpiTracker.models.constants.InventoryAvailibilityStatus;
 import org.sers.webutils.model.BaseEntity;
 
 import javax.persistence.Column;
@@ -11,9 +12,10 @@ import java.util.Objects;
 @Table(name="inventoryItem")
 public class InventoryItem  extends BaseEntity {
    private String name;
-   private  double costPrice;
+   private InventoryAvailibilityStatus inventoryAvailibilityStatus;
+    private  double costPrice;
    private  double  sellingPrice;
-   private  int openingStock;
+   private  double openingStock;
    private  int orderedQty;
    private  int closingStock;
    private  double  profit;
@@ -46,11 +48,11 @@ public class InventoryItem  extends BaseEntity {
     }
 
     @Column(name="itemOpeningStock")
-    public int getOpeningStock() {
+    public double getOpeningStock() {
         return openingStock;
     }
 
-    public void setOpeningStock(int openingStock) {
+    public void setOpeningStock(double openingStock) {
         this.openingStock = openingStock;
     }
 @Column(name="itemOrderedQty")
@@ -79,16 +81,22 @@ public class InventoryItem  extends BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        InventoryItem that = (InventoryItem) o;
-        return Double.compare(costPrice, that.costPrice) == 0 && Double.compare(sellingPrice, that.sellingPrice)
-                == 0 && openingStock == that.openingStock && orderedQty == that.orderedQty && closingStock ==
-                that.closingStock && Double.compare(profit, that.profit) == 0 && Objects.equals(name, that.name);
+    public int hashCode() {
+        // Persisted entities are identified by their ID
+        return Objects.hash(super.getId());
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, costPrice, sellingPrice, openingStock, orderedQty, closingStock, profit, loss);
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        InventoryItem inventoryItem = (InventoryItem) o;
+        return super.getId() != null && Objects.equals(super.getId(), inventoryItem.getId());
+    }
+
+    public String toString(){
+        return this.name;
     }
 }

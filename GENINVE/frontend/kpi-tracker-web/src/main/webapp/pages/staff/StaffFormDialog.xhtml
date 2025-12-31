@@ -62,8 +62,7 @@
                                      requiredMessage="Phone number is required"
                                      placeholder="0771234567 or 256771234567"
                                      validatorMessage="Invalid phone number format">
-                            <f:validateRegex pattern="^(0(77|74|78|76|70)\d{7}|256(77|74|78|76|70)\d{7})$" />
-                            <p:ajax event="blur" update="messages"/>
+                             <p:ajax event="blur" update="messages"/>
                         </p:inputText>
                     </div>
 

@@ -17,23 +17,35 @@ public class Debtor extends BaseEntity {
 
     private String name;
     private InventoryItem inventoryItem;
-    private  int itemQty;
+    private double itemQty;
     private  double amount;
-    private  int phone;
+    private  String  phone;
+    private double debtPaid;
+    private double debtRemaining;
     private Date dateDebtTaken;
     private DebtStatus  status;
+
+    @Column(name="debt_remaining")
+    public double getDebtRemaining() {
+        return debtRemaining;
+    }
+
+    @Column(name="debt_paid")
+    public double getDebtPaid() {
+        return debtPaid;
+    }
 
     public String getName() {
         return name;
     }
 
-@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+@ManyToOne(fetch = FetchType.EAGER)
 @JoinColumn(name = "item_id")
     public InventoryItem getInventoryItem() {
         return inventoryItem;
     }
 @Column(name="itemQtyOrdered")
-    public int getItemQty() {
+    public double getItemQty() {
         return itemQty;
     }
 @Column(name="amount")
@@ -41,7 +53,7 @@ public class Debtor extends BaseEntity {
         return amount;
     }
 @Column(name="phoneNumber")
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 @Column(name ="dateDebtTaken")
@@ -55,13 +67,13 @@ public class Debtor extends BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Debtor)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Debtor debtor = (Debtor) o;
-        return itemQty == debtor.itemQty && Double.compare(amount, debtor.amount) == 0 && phone == debtor.phone && Objects.equals(name, debtor.name) && Objects.equals(inventoryItem, debtor.inventoryItem) && Objects.equals(dateDebtTaken, debtor.dateDebtTaken) && status == debtor.status;
+        return itemQty == debtor.itemQty && Double.compare(amount, debtor.amount) == 0 && phone == debtor.phone && Double.compare(debtPaid, debtor.debtPaid) == 0 && Double.compare(debtRemaining, debtor.debtRemaining) == 0 && Objects.equals(name, debtor.name) && Objects.equals(inventoryItem, debtor.inventoryItem) && Objects.equals(dateDebtTaken, debtor.dateDebtTaken) && status == debtor.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, inventoryItem, itemQty, amount, phone, dateDebtTaken, status);
+        return Objects.hash(name, inventoryItem, itemQty, amount, phone, dateDebtTaken, status,debtRemaining,debtPaid);
     }
 }

@@ -32,6 +32,12 @@
                     <p:menuitem id="dashboard" value="Dashboard" icon="pi pi-fw pi-home"
                         outcome="/pages/dashboard/Dashboard" />
 
+                    <p:menuitem id="commodities" value="Commodities" icon="pi pi-fw pi-home"
+                                outcome="/pages/inventoryItems/InventoryItem" />
+
+                    <p:menuitem id="debtors" value="Debtors" icon="pi pi-fw pi-home"
+                                outcome="/pages/debtor/DebtorView" />
+
                     <p:menuitem id="staff" value="Staff management" icon="pi pi-fw pi-users"
                         outcome="/pages/staff/StaffView"
                         rendered="#{dashboard.loggedinUser.hasPermission('View Users') || dashboard.loggedinUser.hasPermission('Create Staff') || dashboard.loggedinUser.hasPermission('Delete Staff') || dashboard.loggedinUser.hasPermission('Edit Staff')}" />
